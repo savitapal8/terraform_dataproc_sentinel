@@ -1,0 +1,104 @@
+# This policy uses the Sentinel tfplan/v2 import to require that
+# all GCE dataproc instances following all the policies
+
+# Note that the comparison is case-sensitive but also that GCE labels are only
+# allowed to contain lowercase letters, numbers, hypens, and underscores.
+
+import "strings"
+import "types"
+import "tfplan-functions" as plan
+
+# Get all GCE dataproc instances
+allDPInstances = plan.find_resources("google_dataproc_cluster")
+
+# Filter to GCE dataproc instances with violations
+# Warnings will be printed for all violations since the last parameter is true
+
+message = {}
+violatingDPInstances = {}
+
+enable_http_port_access = true
+internal_ip_only = false
+key = ""
+
+sentinelSearch = func(arr, key) { 
+ 	for arr as val {
+		if val is key {
+			return true;
+		}
+	}
+	return false;    
+}
+
+for allDPInstances as address, rc {
+	key = "cluster_config"
+	result = sentinelSearch(rc["change"]["after"],key)
+	
+	if not result {
+		violatingDPInstances[address] = rc
+		message[address] = "The node " + key + " is not available"
+	
+	} else {
+		key = "endpoint_config"
+		result = sentinelSearch(rc["change"]["after"]["cluster_config"][0],key)
+
+		if not result {
+			violatingDPInstances[address] = rc
+			message[address] = "The node " + key + " is not available"
+		} else {			
+			key = "enable_http_port_access"
+			result = sentinelSearch(rc["change"]["after"]["cluster_config"][0]["endpoint_config"][0], key)
+
+			if not result {
+				violatingDPInstances[address] = rc
+				message[address] = "The node " + key + " is not available"
+			} else {
+				enable_http_port_access = rc["change"]["after"]["cluster_config"][0]["endpoint_config"][0][key]
+				if  enable_http_port_access {
+					message[address] = "Https port's access needs to be disabled for the dataproc services, please set value false to make it disabled"
+				}
+			}
+		}
+
+		//gce_cluster_config
+		key = "gce_cluster_config"
+		result = sentinelSearch(rc["change"]["after"]["cluster_config"][0], key)
+		
+		if not result {
+			violatingDPInstances[address] = rc
+			message[address] = "The node " + key + " is not available"
+		} else {
+
+			key = "internal_ip_only"
+			result = sentinelSearch(rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0], key)
+			
+			 if not result {				
+				violatingDPInstances[address] = rc
+			 	message[address] = "The node " + key + " is not available"
+			 } else {
+			 	internal_ip_only = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
+			    if not internal_ip_only {
+					message[address] = "The dataproc service will be accessible through internal ip only but it is disabled here, please set value true to make it enable"
+				}
+
+			 }
+		}
+
+
+	}
+
+}
+
+GCP_DATAPROC_PRIV = rule {
+	internal_ip_only
+}
+
+GCP_DATAPROC_HTTPS = rule {
+	not enable_http_port_access
+}
+
+
+# Main rule
+print(message)
+
+main = rule { GCP_DATAPROC_HTTPS and GCP_DATAPROC_PRIV }
