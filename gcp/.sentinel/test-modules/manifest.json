@@ -1,0 +1,22 @@
+{
+	"records": [
+		{
+			"key": "test\\google_dataproc_cluster\\success\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\failure\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\null\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"records": [
+		{
+			"key": "google_dataproc_cluster",
+			"source": "./google_dataproc_cluster.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/gcp/google_dataproc_cluster.sentinel"
+		}
+	]
+}
