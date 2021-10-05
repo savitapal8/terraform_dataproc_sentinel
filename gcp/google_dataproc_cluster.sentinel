@@ -14,7 +14,7 @@ allDPInstances = plan.find_resources("google_dataproc_cluster")
 # Filter to GCE dataproc instances with violations
 # Warnings will be printed for all violations since the last parameter is true
 
-message = {}
+messages = {}
 violatingDPInstances = {}
 
 default_compute_sa = "compute@developer.gserviceaccount.com"
@@ -33,13 +33,15 @@ sentinelSearch = func(arr, key) {
 }
 
 for allDPInstances as address, rc {
+	messages[address] = []
 	//*******************validating cluster_config node*****************************************
 	key = "cluster_config"
 	result = sentinelSearch(rc["change"]["after"],key)
 	
 	if not result {
 		violatingDPInstances[address] = rc
-		message[address] = "The node " + key + " is not available"
+		message = plan.to_string(address) + " does not have "+ key +" defined"
+		append(messages[address],message)
 	
 	} else {
 		//*******************validating endpoint_config node************************************
@@ -48,7 +50,8 @@ for allDPInstances as address, rc {
 
 		if not result {
 			violatingDPInstances[address] = rc
-			message[address] = "The node " + key + " is not available"
+			message = plan.to_string(address) + " does not have "+ key +" defined"
+			append(messages[address],message)
 		} else {	
 		//*******************validating enable_http_port_access node*****************************		
 			key = "enable_http_port_access"
@@ -56,11 +59,13 @@ for allDPInstances as address, rc {
 
 			if not result {
 				violatingDPInstances[address] = rc
-				message[address] = "The node " + key + " is not available"
+				message = plan.to_string(address) + " does not have "+ key +" defined"
+				append(messages[address],message)
 			} else {
 				enable_http_port_access = rc["change"]["after"]["cluster_config"][0]["endpoint_config"][0][key]
 				if  enable_http_port_access {
-					message[address] = "Https port's access needs to be disabled for the dataproc services, please set value false to make it disabled"
+					message = "Https port's access needs to be disabled for the dataproc services, please set value false to make it disabled"
+					append(messages[address],message)
 				}
 			}
 		}
@@ -71,7 +76,8 @@ for allDPInstances as address, rc {
 		
 		if not result {
 			violatingDPInstances[address] = rc
-			message[address] = "The node " + key + " is not available"
+			message = plan.to_string(address) + " does not have "+ key +" defined"
+			append(messages[address],message)
 		} else {
 
 		//*******************validating internal_ip_only node*****************************
@@ -80,11 +86,13 @@ for allDPInstances as address, rc {
 			
 			if not result {				
 				violatingDPInstances[address] = rc
-				message[address] = "The node " + key + " is not available"
+				message = plan.to_string(address) + " does not have "+ key +" defined"
+				append(messages[address],message)
 			} else {
 				internal_ip_only = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
 				if not internal_ip_only {
-					message[address] = "The dataproc service will be accessible through internal ip only but it is disabled here, please set value true to make it enable"
+					message = "The dataproc service will be accessible through internal ip only but it is disabled here, please set value true to make it enable"
+					append(messages[address],message)
 				}
 			}
 
@@ -99,20 +107,23 @@ for allDPInstances as address, rc {
 					service_account_validation = true;
 				} else {
 					service_account_validation = false;
-					message[address] = "Dataproc service is not having any service account, please assign it"
+					message = "Dataproc service is not having any service account, please assign it"
+					append(messages[address],message)
 				}
 			} else {
 				service_account_emailid = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
 				if service_account_emailid is null {
 				//------------------------Serivce Account is having null value, means no SA is attached
 					service_account_validation = false;
-					message[address] = "Dataproc service is not having any service account, please assign it"
+					message = "Dataproc service is not having any service account, please assign it"
+					append(messages[address],message)
 				} else {
 						arr_sa = strings.split(service_account_emailid,default_compute_sa)
 
 						if length(arr_sa) > 1 {
 								service_account_validation = false;
-								message[address] = "The service account of dataproc service can not be a default compute service account, please change it"
+								message = "The service account of dataproc service can not be a default compute service account, please change it"
+								append(messages[address],message)
 						} else {
 								service_account_validation = true;
 						}
@@ -134,6 +145,6 @@ GCP_DATAPROC_SA = rule {
 	service_account_validation
 }
 # Main rule
-print(message)
+print(messages)
 
 main = rule { GCP_DATAPROC_HTTPS and GCP_DATAPROC_PRIV and GCP_DATAPROC_SA }

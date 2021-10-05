@@ -264,7 +264,7 @@ resource_changes = {
 						"gce_cluster_config": [
 							{
 								"network":         true,
-								"service_account": true,
+								"service_account": false,
 								"service_account_scopes": [
 									false,
 								],
