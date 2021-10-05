@@ -168,6 +168,7 @@ resource_changes = {
 							{
 								"internal_ip_only": true,
 								"metadata":         null,
+								"service_account":  "demo-sentinel-sa@airline1-sabre-wolverine.iam.gserviceaccount.com",
 								"service_account_scopes": [
 									"https://www.googleapis.com/auth/cloud-platform",
 								],

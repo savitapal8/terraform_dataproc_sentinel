@@ -15,50 +15,39 @@ allDPInstances = plan.find_resources("google_dataproc_cluster")
 # Warnings will be printed for all violations since the last parameter is true
 
 messages = {}
-violatingDPInstances = {}
 
 default_compute_sa = "compute@developer.gserviceaccount.com"
 enable_http_port_access = true
 internal_ip_only = false
 service_account_validation = false
+selected_node = null
 key = ""
-
-sentinelSearch = func(arr, key) { 
- 	for arr as val {
-		if val is key {
-			return true;
-		}
-	}
-	return false;    
-}
 
 for allDPInstances as address, rc {
 	messages[address] = []
 	//*******************validating cluster_config node*****************************************
 	key = "cluster_config"
-	result = sentinelSearch(rc["change"]["after"],key)
+
+	selected_node = rc["change"]["after"][key]
 	
-	if not result {
-		violatingDPInstances[address] = rc
+	if types.type_of(selected_node) is "undefined" {
 		message = plan.to_string(address) + " does not have "+ key +" defined"
 		append(messages[address],message)
 	
 	} else {
 		//*******************validating endpoint_config node************************************
 		key = "endpoint_config"
-		result = sentinelSearch(rc["change"]["after"]["cluster_config"][0],key)
+		selected_node = rc["change"]["after"]["cluster_config"][0][key]
 
-		if not result {
-			violatingDPInstances[address] = rc
+		if types.type_of(selected_node) is "undefined" {
 			message = plan.to_string(address) + " does not have "+ key +" defined"
 			append(messages[address],message)
 		} else {	
 		//*******************validating enable_http_port_access node*****************************		
 			key = "enable_http_port_access"
-			result = sentinelSearch(rc["change"]["after"]["cluster_config"][0]["endpoint_config"][0], key)
+			selected_node = rc["change"]["after"]["cluster_config"][0]["endpoint_config"][0][key]
 
-			if not result {
-				violatingDPInstances[address] = rc
+			if types.type_of(selected_node) is "undefined" {
 				message = plan.to_string(address) + " does not have "+ key +" defined"
 				append(messages[address],message)
 			} else {
@@ -72,20 +61,19 @@ for allDPInstances as address, rc {
 
 		//*******************validating gce_cluster_config node***************************
 		key = "gce_cluster_config"
-		result = sentinelSearch(rc["change"]["after"]["cluster_config"][0], key)
+		selected_node = rc["change"]["after"]["cluster_config"][0][key]
 		
-		if not result {
-			violatingDPInstances[address] = rc
+		if types.type_of(selected_node) is "undefined" {
 			message = plan.to_string(address) + " does not have "+ key +" defined"
 			append(messages[address],message)
 		} else {
 
 		//*******************validating internal_ip_only node*****************************
 			key = "internal_ip_only"
-			result = sentinelSearch(rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0], key)
+
+			selected_node = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
 			
-			if not result {				
-				violatingDPInstances[address] = rc
+			if types.type_of(selected_node) is "undefined" {
 				message = plan.to_string(address) + " does not have "+ key +" defined"
 				append(messages[address],message)
 			} else {
@@ -97,10 +85,11 @@ for allDPInstances as address, rc {
 			}
 
 		//*******************validating service_account node*****************************************
-			key = "service_account"			
-			result = sentinelSearch(rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0], key)
+			key = "service_account"		
+
+			selected_node = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
 			
-			if not result {		
+			if types.type_of(selected_node) is "undefined" {		
 				result = rc["change"]["after_unknown"]["cluster_config"][0]["gce_cluster_config"][0]["service_account"]
 				
 				if result {
@@ -112,8 +101,8 @@ for allDPInstances as address, rc {
 				}
 			} else {
 				service_account_emailid = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
-				if service_account_emailid is null {
-				//------------------------Serivce Account is having null value, means no SA is attached
+				print(service_account_emailid)
+				if types.type_of(service_account_emailid) is "null" {
 					service_account_validation = false;
 					message = "Dataproc service is not having any service account, please assign it"
 					append(messages[address],message)
