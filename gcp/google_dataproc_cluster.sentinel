@@ -1,8 +1,7 @@
 # This policy uses the Sentinel tfplan/v2 import to require that
 # all GCE dataproc instances following all the policies
 
-# Note that the comparison is case-sensitive but also that GCE labels are only
-# allowed to contain lowercase letters, numbers, hypens, and underscores.
+# Note that the comparison is case-sensitive.
 
 import "strings"
 import "types"
@@ -14,14 +13,13 @@ allDPInstances = plan.find_resources("google_dataproc_cluster")
 # Filter to GCE dataproc instances with violations
 # Warnings will be printed for all violations since the last parameter is true
 
-messages = {}
-
-default_compute_sa = "compute@developer.gserviceaccount.com"
-enable_http_port_access = true
-internal_ip_only = false
-service_account_validation = false
-selected_node = null
 key = ""
+messages = {}
+default_compute_sa = "compute@developer.gserviceaccount.com"
+selected_node = null
+internal_ip_only = false
+enable_http_port_access = true
+service_account_validation = false
 
 for allDPInstances as address, rc {
 	messages[address] = []
