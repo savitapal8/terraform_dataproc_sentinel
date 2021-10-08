@@ -4,7 +4,7 @@ module "tfplan-functions" {
 
 mock "tfplan/v2" {
   module {
-    source = "./mock-tfplan-null.sentinel"
+    source = "./mock-tfplan-gdc-dp-sa-null.sentinel"
   }
 }
 

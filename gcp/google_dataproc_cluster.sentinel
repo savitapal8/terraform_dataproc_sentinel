@@ -26,30 +26,32 @@ for allDPInstances as address, rc {
 	//*******************validating cluster_config node*****************************************
 	key = "cluster_config"
 
-	selected_node = rc["change"]["after"][key]
+	selected_node = plan.evaluate_attribute(rc, key)
 	
-	if types.type_of(selected_node) is "undefined" {
+	if types.type_of(selected_node) is "null" {
 		message = plan.to_string(address) + " does not have "+ key +" defined"
 		append(messages[address],message)
 	
 	} else {
 		//*******************validating endpoint_config node************************************
 		key = "endpoint_config"
-		selected_node = rc["change"]["after"]["cluster_config"][0][key]
+		
+		selected_node = plan.evaluate_attribute(rc, "cluster_config.0."+key)
 
-		if types.type_of(selected_node) is "undefined" {
+		if types.type_of(selected_node) is "null" {
 			message = plan.to_string(address) + " does not have "+ key +" defined"
 			append(messages[address],message)
 		} else {	
 		//*******************validating enable_http_port_access node*****************************		
 			key = "enable_http_port_access"
-			selected_node = rc["change"]["after"]["cluster_config"][0]["endpoint_config"][0][key]
+			selected_node = plan.evaluate_attribute(rc, "cluster_config.0.endpoint_config.0."+key)
 
-			if types.type_of(selected_node) is "undefined" {
+			if types.type_of(selected_node) is "null" {
 				message = plan.to_string(address) + " does not have "+ key +" defined"
 				append(messages[address],message)
 			} else {
-				enable_http_port_access = rc["change"]["after"]["cluster_config"][0]["endpoint_config"][0][key]
+				enable_http_port_access = selected_node
+				
 				if  enable_http_port_access {
 					message = "Https port's access needs to be disabled for the dataproc services, please set value false to make it disabled"
 					append(messages[address],message)
@@ -59,23 +61,22 @@ for allDPInstances as address, rc {
 
 		//*******************validating gce_cluster_config node***************************
 		key = "gce_cluster_config"
-		selected_node = rc["change"]["after"]["cluster_config"][0][key]
+		selected_node = plan.evaluate_attribute(rc, "cluster_config.0."+key)
 		
-		if types.type_of(selected_node) is "undefined" {
+		if types.type_of(selected_node) is "null" {
 			message = plan.to_string(address) + " does not have "+ key +" defined"
 			append(messages[address],message)
 		} else {
 
 		//*******************validating internal_ip_only node*****************************
 			key = "internal_ip_only"
-
-			selected_node = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
+			selected_node = plan.evaluate_attribute(rc, "cluster_config.0.gce_cluster_config.0."+key)
 			
-			if types.type_of(selected_node) is "undefined" {
+			if types.type_of(selected_node) is "null" {
 				message = plan.to_string(address) + " does not have "+ key +" defined"
 				append(messages[address],message)
 			} else {
-				internal_ip_only = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
+				internal_ip_only = selected_node
 				if not internal_ip_only {
 					message = "The dataproc service will be accessible through internal ip only but it is disabled here, please set value true to make it enable"
 					append(messages[address],message)
@@ -85,21 +86,21 @@ for allDPInstances as address, rc {
 		//*******************validating service_account node*****************************************
 			key = "service_account"		
 
-			selected_node = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
+			selected_node = plan.evaluate_attribute(rc, "cluster_config.0.gce_cluster_config.0."+key)
 			
-			if types.type_of(selected_node) is "undefined" {		
-				result = rc["change"]["after_unknown"]["cluster_config"][0]["gce_cluster_config"][0]["service_account"]
-				
-				if result {
+			if types.type_of(selected_node) is "null" {		
+				result = plan.evaluate_attribute(rc.change.after_unknown, "cluster_config.0.gce_cluster_config.0."+key)
+
+				if result is "null" or result is true {
 					service_account_validation = true;
 				} else {
 					service_account_validation = false;
 					message = "Dataproc service is not having any service account, please assign it"
 					append(messages[address],message)
 				}
-			} else {
-				service_account_emailid = rc["change"]["after"]["cluster_config"][0]["gce_cluster_config"][0][key]
-				print(service_account_emailid)
+			} else {				
+				service_account_emailid = plan.evaluate_attribute(rc, "cluster_config.0.gce_cluster_config.0."+key)
+				
 				if types.type_of(service_account_emailid) is "null" {
 					service_account_validation = false;
 					message = "Dataproc service is not having any service account, please assign it"

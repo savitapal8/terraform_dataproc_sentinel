@@ -25,12 +25,12 @@ planned_values = {
 						],
 						"endpoint_config": [
 							{
-								"enable_http_port_access": true,
+								"enable_http_port_access": false,
 							},
 						],
 						"gce_cluster_config": [
 							{
-								"internal_ip_only": false,
+								"internal_ip_only": true,
 								"metadata":         null,
 								"service_account":  null,
 								"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
@@ -114,12 +114,12 @@ planned_values = {
 						],
 						"endpoint_config": [
 							{
-								"enable_http_port_access": true,
+								"enable_http_port_access": false,
 							},
 						],
 						"gce_cluster_config": [
 							{
-								"internal_ip_only": false,
+								"internal_ip_only": true,
 								"metadata":         null,
 								"service_account":  "demo-sentinel-compute@developer.gserviceaccount.com",
 								"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east1/subnetworks/savita-subnet-vpc-2",
@@ -209,12 +209,12 @@ resource_changes = {
 						],
 						"endpoint_config": [
 							{
-								"enable_http_port_access": true,
+								"enable_http_port_access": false,
 							},
 						],
 						"gce_cluster_config": [
 							{
-								"internal_ip_only": false,
+								"internal_ip_only": true,
 								"metadata":         null,
 								"service_account":  null,
 								"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
@@ -367,12 +367,12 @@ resource_changes = {
 						],
 						"endpoint_config": [
 							{
-								"enable_http_port_access": true,
+								"enable_http_port_access": false,
 							},
 						],
 						"gce_cluster_config": [
 							{
-								"internal_ip_only": false,
+								"internal_ip_only": true,
 								"metadata":         null,
 								"service_account":  "demo-sentinel-compute@developer.gserviceaccount.com",
 								"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east1/subnetworks/savita-subnet-vpc-2",
@@ -553,14 +553,14 @@ raw = {
 								"endpoint_config": [
 									{
 										"enable_http_port_access": {
-											"constant_value": true,
+											"constant_value": false,
 										},
 									},
 								],
 								"gce_cluster_config": [
 									{
 										"internal_ip_only": {
-											"constant_value": false,
+											"constant_value": true,
 										},
 										"service_account": {},
 										"subnetwork": {
@@ -664,14 +664,14 @@ raw = {
 								"endpoint_config": [
 									{
 										"enable_http_port_access": {
-											"constant_value": true,
+											"constant_value": false,
 										},
 									},
 								],
 								"gce_cluster_config": [
 									{
 										"internal_ip_only": {
-											"constant_value": false,
+											"constant_value": true,
 										},
 										"service_account": {
 											"constant_value": "demo-sentinel-compute@developer.gserviceaccount.com",
@@ -849,12 +849,12 @@ raw = {
 								],
 								"endpoint_config": [
 									{
-										"enable_http_port_access": true,
+										"enable_http_port_access": false,
 									},
 								],
 								"gce_cluster_config": [
 									{
-										"internal_ip_only": false,
+										"internal_ip_only": true,
 										"metadata":         null,
 										"service_account":  null,
 										"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
@@ -990,12 +990,12 @@ raw = {
 								],
 								"endpoint_config": [
 									{
-										"enable_http_port_access": true,
+										"enable_http_port_access": false,
 									},
 								],
 								"gce_cluster_config": [
 									{
-										"internal_ip_only": false,
+										"internal_ip_only": true,
 										"metadata":         null,
 										"service_account":  "demo-sentinel-compute@developer.gserviceaccount.com",
 										"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east1/subnetworks/savita-subnet-vpc-2",
@@ -1078,12 +1078,12 @@ raw = {
 							],
 							"endpoint_config": [
 								{
-									"enable_http_port_access": true,
+									"enable_http_port_access": false,
 								},
 							],
 							"gce_cluster_config": [
 								{
-									"internal_ip_only": false,
+									"internal_ip_only": true,
 									"metadata":         null,
 									"service_account":  null,
 									"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
@@ -1290,12 +1290,12 @@ raw = {
 							],
 							"endpoint_config": [
 								{
-									"enable_http_port_access": true,
+									"enable_http_port_access": false,
 								},
 							],
 							"gce_cluster_config": [
 								{
-									"internal_ip_only": false,
+									"internal_ip_only": true,
 									"metadata":         null,
 									"service_account":  "demo-sentinel-compute@developer.gserviceaccount.com",
 									"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east1/subnetworks/savita-subnet-vpc-2",

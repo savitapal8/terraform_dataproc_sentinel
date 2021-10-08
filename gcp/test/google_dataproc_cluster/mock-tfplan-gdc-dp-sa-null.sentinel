@@ -3,14 +3,14 @@ terraform_version = "1.0.8"
 planned_values = {
 	"outputs": {},
 	"resources": {
-		"google_dataproc_cluster.mycluster": {
-			"address":        "google_dataproc_cluster.mycluster",
+		"google_dataproc_cluster.cluster-null-wsan": {
+			"address":        "google_dataproc_cluster.cluster-null-wsan",
 			"depends_on":     [],
 			"deposed_key":    "",
 			"index":          null,
 			"mode":           "managed",
 			"module_address": "",
-			"name":           "mycluster",
+			"name":           "cluster-null-wsan",
 			"provider_name":  "registry.terraform.io/hashicorp/google-beta",
 			"tainted":        false,
 			"type":           "google_dataproc_cluster",
@@ -32,32 +32,19 @@ planned_values = {
 							{
 								"internal_ip_only": true,
 								"metadata":         null,
-								"service_account_scopes": [
-									"https://www.googleapis.com/auth/cloud-platform",
-								],
-								"subnetwork": null,
+								"service_account":  null,
+								"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
 								"tags": [
 									"bar",
 									"foo",
 								],
 							},
 						],
-						"initialization_action": [
-							{
-								"script":      "gs://dataproc-initialization-actions/stackdriver/stackdriver.sh",
-								"timeout_sec": 500,
-							},
-						],
-						"lifecycle_config": [],
+						"initialization_action": [],
+						"lifecycle_config":      [],
 						"master_config": [
 							{
-								"accelerators": [],
-								"disk_config": [
-									{
-										"boot_disk_size_gb": 30,
-										"boot_disk_type":    "pd-ssd",
-									},
-								],
+								"accelerators":  [],
 								"machine_type":  "e2-medium",
 								"num_instances": 1,
 							},
@@ -78,20 +65,12 @@ planned_values = {
 								},
 							},
 						],
-						"staging_bucket": "dataproc-staging-bucket",
+						"staging_bucket": "dataproc-staging-bucket123",
 						"worker_config": [
 							{
-								"accelerators": [],
-								"disk_config": [
-									{
-										"boot_disk_size_gb": 30,
-										"boot_disk_type":    "pd-standard",
-										"num_local_ssds":    1,
-									},
-								],
-								"machine_type":     "e2-medium",
-								"min_cpu_platform": "Intel Skylake",
-								"num_instances":    2,
+								"accelerators":  [],
+								"machine_type":  "e2-medium",
+								"num_instances": 2,
 							},
 						],
 					},
@@ -107,30 +86,10 @@ planned_values = {
 					"gcp_region":           "us-central1",
 					"owner":                "wf",
 				},
-				"name":     "mycluster",
+				"name":     "cluster-null-wsan",
 				"project":  "airline1-sabre-wolverine",
-				"region":   "us-central1",
+				"region":   "us-east4",
 				"timeouts": null,
-			},
-		},
-		"google_service_account.default": {
-			"address":        "google_service_account.default",
-			"depends_on":     [],
-			"deposed_key":    "",
-			"index":          null,
-			"mode":           "managed",
-			"module_address": "",
-			"name":           "default",
-			"provider_name":  "registry.terraform.io/hashicorp/google",
-			"tainted":        false,
-			"type":           "google_service_account",
-			"values": {
-				"account_id":   "service-account-id",
-				"description":  null,
-				"disabled":     false,
-				"display_name": "Service Account",
-				"project":      "airline1-sabre-wolverine",
-				"timeouts":     null,
 			},
 		},
 	},
@@ -144,8 +103,8 @@ variables = {
 }
 
 resource_changes = {
-	"google_dataproc_cluster.mycluster": {
-		"address": "google_dataproc_cluster.mycluster",
+	"google_dataproc_cluster.cluster-null-wsan": {
+		"address": "google_dataproc_cluster.cluster-null-wsan",
 		"change": {
 			"actions": [
 				"create",
@@ -168,32 +127,19 @@ resource_changes = {
 							{
 								"internal_ip_only": true,
 								"metadata":         null,
-								"service_account_scopes": [
-									"https://www.googleapis.com/auth/cloud-platform",
-								],
-								"subnetwork": null,
+								"service_account":  null,
+								"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
 								"tags": [
 									"bar",
 									"foo",
 								],
 							},
 						],
-						"initialization_action": [
-							{
-								"script":      "gs://dataproc-initialization-actions/stackdriver/stackdriver.sh",
-								"timeout_sec": 500,
-							},
-						],
-						"lifecycle_config": [],
+						"initialization_action": [],
+						"lifecycle_config":      [],
 						"master_config": [
 							{
-								"accelerators": [],
-								"disk_config": [
-									{
-										"boot_disk_size_gb": 30,
-										"boot_disk_type":    "pd-ssd",
-									},
-								],
+								"accelerators":  [],
 								"machine_type":  "e2-medium",
 								"num_instances": 1,
 							},
@@ -214,20 +160,12 @@ resource_changes = {
 								},
 							},
 						],
-						"staging_bucket": "dataproc-staging-bucket",
+						"staging_bucket": "dataproc-staging-bucket123",
 						"worker_config": [
 							{
-								"accelerators": [],
-								"disk_config": [
-									{
-										"boot_disk_size_gb": 30,
-										"boot_disk_type":    "pd-standard",
-										"num_local_ssds":    1,
-									},
-								],
-								"machine_type":     "e2-medium",
-								"min_cpu_platform": "Intel Skylake",
-								"num_instances":    2,
+								"accelerators":  [],
+								"machine_type":  "e2-medium",
+								"num_instances": 2,
 							},
 						],
 					},
@@ -243,9 +181,9 @@ resource_changes = {
 					"gcp_region":           "us-central1",
 					"owner":                "wf",
 				},
-				"name":     "mycluster",
+				"name":     "cluster-null-wsan",
 				"project":  "airline1-sabre-wolverine",
-				"region":   "us-central1",
+				"region":   "us-east4",
 				"timeouts": null,
 			},
 			"after_unknown": {
@@ -263,11 +201,8 @@ resource_changes = {
 						],
 						"gce_cluster_config": [
 							{
-								"network":         true,
-								"service_account": true,
-								"service_account_scopes": [
-									false,
-								],
+								"network":                  true,
+								"service_account_scopes":   true,
 								"shielded_instance_config": true,
 								"tags": [
 									false,
@@ -276,18 +211,12 @@ resource_changes = {
 								"zone": true,
 							},
 						],
-						"initialization_action": [
-							{},
-						],
-						"lifecycle_config": [],
+						"initialization_action": [],
+						"lifecycle_config":      [],
 						"master_config": [
 							{
-								"accelerators": [],
-								"disk_config": [
-									{
-										"num_local_ssds": true,
-									},
-								],
+								"accelerators":     [],
+								"disk_config":      true,
 								"image_uri":        true,
 								"instance_names":   true,
 								"min_cpu_platform": true,
@@ -310,12 +239,11 @@ resource_changes = {
 						"temp_bucket": true,
 						"worker_config": [
 							{
-								"accelerators": [],
-								"disk_config": [
-									{},
-								],
-								"image_uri":      true,
-								"instance_names": true,
+								"accelerators":     [],
+								"disk_config":      true,
+								"image_uri":        true,
+								"instance_names":   true,
+								"min_cpu_platform": true,
 							},
 						],
 					},
@@ -329,39 +257,9 @@ resource_changes = {
 		"index":          null,
 		"mode":           "managed",
 		"module_address": "",
-		"name":           "mycluster",
+		"name":           "cluster-null-wsan",
 		"provider_name":  "registry.terraform.io/hashicorp/google-beta",
 		"type":           "google_dataproc_cluster",
-	},
-	"google_service_account.default": {
-		"address": "google_service_account.default",
-		"change": {
-			"actions": [
-				"create",
-			],
-			"after": {
-				"account_id":   "service-account-id",
-				"description":  null,
-				"disabled":     false,
-				"display_name": "Service Account",
-				"project":      "airline1-sabre-wolverine",
-				"timeouts":     null,
-			},
-			"after_unknown": {
-				"email":     true,
-				"id":        true,
-				"name":      true,
-				"unique_id": true,
-			},
-			"before": null,
-		},
-		"deposed":        "",
-		"index":          null,
-		"mode":           "managed",
-		"module_address": "",
-		"name":           "default",
-		"provider_name":  "registry.terraform.io/hashicorp/google",
-		"type":           "google_service_account",
 	},
 }
 
@@ -377,9 +275,6 @@ raw = {
 							"var.access_token",
 						],
 					},
-					"user_project_override": {
-						"constant_value": true,
-					},
 				},
 				"name": "google",
 			},
@@ -390,9 +285,6 @@ raw = {
 							"var.access_token",
 						],
 					},
-					"user_project_override": {
-						"constant_value": true,
-					},
 				},
 				"name": "google-beta",
 			},
@@ -400,7 +292,7 @@ raw = {
 		"root_module": {
 			"resources": [
 				{
-					"address": "google_dataproc_cluster.mycluster",
+					"address": "google_dataproc_cluster.cluster-null-wsan",
 					"expressions": {
 						"cluster_config": [
 							{
@@ -423,16 +315,9 @@ raw = {
 										"internal_ip_only": {
 											"constant_value": true,
 										},
-										"service_account": {
-											"references": [
-												"google_service_account.default.email",
-												"google_service_account.default",
-											],
-										},
-										"service_account_scopes": {
-											"constant_value": [
-												"cloud-platform",
-											],
+										"service_account": {},
+										"subnetwork": {
+											"constant_value": "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
 										},
 										"tags": {
 											"constant_value": [
@@ -442,28 +327,8 @@ raw = {
 										},
 									},
 								],
-								"initialization_action": [
-									{
-										"script": {
-											"constant_value": "gs://dataproc-initialization-actions/stackdriver/stackdriver.sh",
-										},
-										"timeout_sec": {
-											"constant_value": 500,
-										},
-									},
-								],
 								"master_config": [
 									{
-										"disk_config": [
-											{
-												"boot_disk_size_gb": {
-													"constant_value": 30,
-												},
-												"boot_disk_type": {
-													"constant_value": "pd-ssd",
-												},
-											},
-										],
 										"machine_type": {
 											"constant_value": "e2-medium",
 										},
@@ -492,25 +357,12 @@ raw = {
 									},
 								],
 								"staging_bucket": {
-									"constant_value": "dataproc-staging-bucket",
+									"constant_value": "dataproc-staging-bucket123",
 								},
 								"worker_config": [
 									{
-										"disk_config": [
-											{
-												"boot_disk_size_gb": {
-													"constant_value": 30,
-												},
-												"num_local_ssds": {
-													"constant_value": 1,
-												},
-											},
-										],
 										"machine_type": {
 											"constant_value": "e2-medium",
-										},
-										"min_cpu_platform": {
-											"constant_value": "Intel Skylake",
 										},
 										"num_instances": {
 											"constant_value": 2,
@@ -535,39 +387,20 @@ raw = {
 							},
 						},
 						"name": {
-							"constant_value": "mycluster",
+							"constant_value": "cluster-null-wsan",
 						},
 						"project": {
 							"constant_value": "airline1-sabre-wolverine",
 						},
 						"region": {
-							"constant_value": "us-central1",
+							"constant_value": "us-east4",
 						},
 					},
 					"mode":                "managed",
-					"name":                "mycluster",
+					"name":                "cluster-null-wsan",
 					"provider_config_key": "google-beta",
 					"schema_version":      0,
 					"type":                "google_dataproc_cluster",
-				},
-				{
-					"address": "google_service_account.default",
-					"expressions": {
-						"account_id": {
-							"constant_value": "service-account-id",
-						},
-						"display_name": {
-							"constant_value": "Service Account",
-						},
-						"project": {
-							"constant_value": "airline1-sabre-wolverine",
-						},
-					},
-					"mode":                "managed",
-					"name":                "default",
-					"provider_config_key": "google",
-					"schema_version":      0,
-					"type":                "google_service_account",
 				},
 			],
 			"variables": {
@@ -583,9 +416,9 @@ raw = {
 		"root_module": {
 			"resources": [
 				{
-					"address":        "google_dataproc_cluster.mycluster",
+					"address":        "google_dataproc_cluster.cluster-null-wsan",
 					"mode":           "managed",
-					"name":           "mycluster",
+					"name":           "cluster-null-wsan",
 					"provider_name":  "registry.terraform.io/hashicorp/google-beta",
 					"schema_version": 0,
 					"sensitive_values": {
@@ -602,9 +435,7 @@ raw = {
 								],
 								"gce_cluster_config": [
 									{
-										"service_account_scopes": [
-											false,
-										],
+										"service_account_scopes":   [],
 										"shielded_instance_config": [],
 										"tags": [
 											false,
@@ -612,16 +443,12 @@ raw = {
 										],
 									},
 								],
-								"initialization_action": [
-									{},
-								],
-								"lifecycle_config": [],
+								"initialization_action": [],
+								"lifecycle_config":      [],
 								"master_config": [
 									{
-										"accelerators": [],
-										"disk_config": [
-											{},
-										],
+										"accelerators":   [],
+										"disk_config":    [],
 										"instance_names": [],
 									},
 								],
@@ -641,10 +468,8 @@ raw = {
 								],
 								"worker_config": [
 									{
-										"accelerators": [],
-										"disk_config": [
-											{},
-										],
+										"accelerators":   [],
+										"disk_config":    [],
 										"instance_names": [],
 									},
 								],
@@ -671,32 +496,19 @@ raw = {
 									{
 										"internal_ip_only": true,
 										"metadata":         null,
-										"service_account_scopes": [
-											"https://www.googleapis.com/auth/cloud-platform",
-										],
-										"subnetwork": null,
+										"service_account":  null,
+										"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
 										"tags": [
 											"bar",
 											"foo",
 										],
 									},
 								],
-								"initialization_action": [
-									{
-										"script":      "gs://dataproc-initialization-actions/stackdriver/stackdriver.sh",
-										"timeout_sec": 500,
-									},
-								],
-								"lifecycle_config": [],
+								"initialization_action": [],
+								"lifecycle_config":      [],
 								"master_config": [
 									{
-										"accelerators": [],
-										"disk_config": [
-											{
-												"boot_disk_size_gb": 30,
-												"boot_disk_type":    "pd-ssd",
-											},
-										],
+										"accelerators":  [],
 										"machine_type":  "e2-medium",
 										"num_instances": 1,
 									},
@@ -717,20 +529,12 @@ raw = {
 										},
 									},
 								],
-								"staging_bucket": "dataproc-staging-bucket",
+								"staging_bucket": "dataproc-staging-bucket123",
 								"worker_config": [
 									{
-										"accelerators": [],
-										"disk_config": [
-											{
-												"boot_disk_size_gb": 30,
-												"boot_disk_type":    "pd-standard",
-												"num_local_ssds":    1,
-											},
-										],
-										"machine_type":     "e2-medium",
-										"min_cpu_platform": "Intel Skylake",
-										"num_instances":    2,
+										"accelerators":  [],
+										"machine_type":  "e2-medium",
+										"num_instances": 2,
 									},
 								],
 							},
@@ -746,27 +550,10 @@ raw = {
 							"gcp_region":           "us-central1",
 							"owner":                "wf",
 						},
-						"name":     "mycluster",
+						"name":     "cluster-null-wsan",
 						"project":  "airline1-sabre-wolverine",
-						"region":   "us-central1",
+						"region":   "us-east4",
 						"timeouts": null,
-					},
-				},
-				{
-					"address":          "google_service_account.default",
-					"mode":             "managed",
-					"name":             "default",
-					"provider_name":    "registry.terraform.io/hashicorp/google",
-					"schema_version":   0,
-					"sensitive_values": {},
-					"type":             "google_service_account",
-					"values": {
-						"account_id":   "service-account-id",
-						"description":  null,
-						"disabled":     false,
-						"display_name": "Service Account",
-						"project":      "airline1-sabre-wolverine",
-						"timeouts":     null,
 					},
 				},
 			],
@@ -774,7 +561,7 @@ raw = {
 	},
 	"resource_changes": [
 		{
-			"address": "google_dataproc_cluster.mycluster",
+			"address": "google_dataproc_cluster.cluster-null-wsan",
 			"change": {
 				"actions": [
 					"create",
@@ -797,32 +584,19 @@ raw = {
 								{
 									"internal_ip_only": true,
 									"metadata":         null,
-									"service_account_scopes": [
-										"https://www.googleapis.com/auth/cloud-platform",
-									],
-									"subnetwork": null,
+									"service_account":  null,
+									"subnetwork":       "projects/airline1-sabre-wolverine/regions/us-east4/subnetworks/savita-subnet-vpc3",
 									"tags": [
 										"bar",
 										"foo",
 									],
 								},
 							],
-							"initialization_action": [
-								{
-									"script":      "gs://dataproc-initialization-actions/stackdriver/stackdriver.sh",
-									"timeout_sec": 500,
-								},
-							],
-							"lifecycle_config": [],
+							"initialization_action": [],
+							"lifecycle_config":      [],
 							"master_config": [
 								{
-									"accelerators": [],
-									"disk_config": [
-										{
-											"boot_disk_size_gb": 30,
-											"boot_disk_type":    "pd-ssd",
-										},
-									],
+									"accelerators":  [],
 									"machine_type":  "e2-medium",
 									"num_instances": 1,
 								},
@@ -843,20 +617,12 @@ raw = {
 									},
 								},
 							],
-							"staging_bucket": "dataproc-staging-bucket",
+							"staging_bucket": "dataproc-staging-bucket123",
 							"worker_config": [
 								{
-									"accelerators": [],
-									"disk_config": [
-										{
-											"boot_disk_size_gb": 30,
-											"boot_disk_type":    "pd-standard",
-											"num_local_ssds":    1,
-										},
-									],
-									"machine_type":     "e2-medium",
-									"min_cpu_platform": "Intel Skylake",
-									"num_instances":    2,
+									"accelerators":  [],
+									"machine_type":  "e2-medium",
+									"num_instances": 2,
 								},
 							],
 						},
@@ -872,9 +638,9 @@ raw = {
 						"gcp_region":           "us-central1",
 						"owner":                "wf",
 					},
-					"name":     "mycluster",
+					"name":     "cluster-null-wsan",
 					"project":  "airline1-sabre-wolverine",
-					"region":   "us-central1",
+					"region":   "us-east4",
 					"timeouts": null,
 				},
 				"after_sensitive": {
@@ -891,9 +657,7 @@ raw = {
 							],
 							"gce_cluster_config": [
 								{
-									"service_account_scopes": [
-										false,
-									],
+									"service_account_scopes":   [],
 									"shielded_instance_config": [],
 									"tags": [
 										false,
@@ -901,16 +665,12 @@ raw = {
 									],
 								},
 							],
-							"initialization_action": [
-								{},
-							],
-							"lifecycle_config": [],
+							"initialization_action": [],
+							"lifecycle_config":      [],
 							"master_config": [
 								{
-									"accelerators": [],
-									"disk_config": [
-										{},
-									],
+									"accelerators":   [],
+									"disk_config":    [],
 									"instance_names": [],
 								},
 							],
@@ -930,10 +690,8 @@ raw = {
 							],
 							"worker_config": [
 								{
-									"accelerators": [],
-									"disk_config": [
-										{},
-									],
+									"accelerators":   [],
+									"disk_config":    [],
 									"instance_names": [],
 								},
 							],
@@ -956,11 +714,8 @@ raw = {
 							],
 							"gce_cluster_config": [
 								{
-									"network":         true,
-									"service_account": true,
-									"service_account_scopes": [
-										false,
-									],
+									"network":                  true,
+									"service_account_scopes":   true,
 									"shielded_instance_config": true,
 									"tags": [
 										false,
@@ -969,18 +724,12 @@ raw = {
 									"zone": true,
 								},
 							],
-							"initialization_action": [
-								{},
-							],
-							"lifecycle_config": [],
+							"initialization_action": [],
+							"lifecycle_config":      [],
 							"master_config": [
 								{
-									"accelerators": [],
-									"disk_config": [
-										{
-											"num_local_ssds": true,
-										},
-									],
+									"accelerators":     [],
+									"disk_config":      true,
 									"image_uri":        true,
 									"instance_names":   true,
 									"min_cpu_platform": true,
@@ -1003,12 +752,11 @@ raw = {
 							"temp_bucket": true,
 							"worker_config": [
 								{
-									"accelerators": [],
-									"disk_config": [
-										{},
-									],
-									"image_uri":      true,
-									"instance_names": true,
+									"accelerators":     [],
+									"disk_config":      true,
+									"image_uri":        true,
+									"instance_names":   true,
+									"min_cpu_platform": true,
 								},
 							],
 						},
@@ -1020,38 +768,9 @@ raw = {
 				"before_sensitive": false,
 			},
 			"mode":          "managed",
-			"name":          "mycluster",
+			"name":          "cluster-null-wsan",
 			"provider_name": "registry.terraform.io/hashicorp/google-beta",
 			"type":          "google_dataproc_cluster",
-		},
-		{
-			"address": "google_service_account.default",
-			"change": {
-				"actions": [
-					"create",
-				],
-				"after": {
-					"account_id":   "service-account-id",
-					"description":  null,
-					"disabled":     false,
-					"display_name": "Service Account",
-					"project":      "airline1-sabre-wolverine",
-					"timeouts":     null,
-				},
-				"after_sensitive": {},
-				"after_unknown": {
-					"email":     true,
-					"id":        true,
-					"name":      true,
-					"unique_id": true,
-				},
-				"before":           null,
-				"before_sensitive": false,
-			},
-			"mode":          "managed",
-			"name":          "default",
-			"provider_name": "registry.terraform.io/hashicorp/google",
-			"type":          "google_service_account",
 		},
 	],
 	"terraform_version": "1.0.8",
