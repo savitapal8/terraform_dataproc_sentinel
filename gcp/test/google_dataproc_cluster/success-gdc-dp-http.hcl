@@ -4,12 +4,12 @@ module "tfplan-functions" {
 
 mock "tfplan/v2" {
   module {
-    source = "./mock-tfplan-gdc-dp-https-failure.sentinel"
+    source = "./mock-tfplan-gdc-dp-http-success.sentinel"
   }
 }
 
 test {
   rules = {
-    main = false
+    main = true
   }
 }
