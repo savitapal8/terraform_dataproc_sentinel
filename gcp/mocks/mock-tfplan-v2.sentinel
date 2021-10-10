@@ -411,7 +411,7 @@ resource_changes = {
 						],
 						"gce_cluster_config": [
 							{
-								"internal_ip_only": true,
+								"internal_ip_only": false,
 								"metadata":         null,
 								"service_account_scopes": [
 									"https://www.googleapis.com/auth/cloud-platform",

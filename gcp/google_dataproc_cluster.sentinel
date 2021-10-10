@@ -15,15 +15,15 @@ allDPInstances = plan.find_resources("google_dataproc_cluster")
 
 key = ""
 messages = {}
+messages_http = {}
+messages_ip_internal = {}
+messages_sa = {}
 default_compute_sa = "compute@developer.gserviceaccount.com"
 selected_node = null
 
-enable_http_port_access = true
-internal_ip_only = false
-service_account_validation = false
-
 for allDPInstances as address, rc {
 	messages[address] = []
+	
 	//*******************validating cluster_config node*****************************************
 	key = "cluster_config"
 
@@ -31,6 +31,12 @@ for allDPInstances as address, rc {
 	
 	if types.type_of(selected_node) is "null" {
 		message = plan.to_string(address) + " does not have "+ key +" defined"
+		messages_http[address] = []
+		messages_ip_internal[address] = []
+		messages_sa[address] = []
+		append(messages_http[address],message)
+		append(messages_ip_internal[address],message)
+		append(messages_sa[address],message)
 		append(messages[address],message)
 	
 	} else {
@@ -38,9 +44,8 @@ for allDPInstances as address, rc {
 		key = "endpoint_config"
 		
 		selected_node = plan.evaluate_attribute(rc, "cluster_config.0."+key)
-		if types.type_of(selected_node) is "null" {
-			enable_http_port_access = false
-		} else {	
+		if types.type_of(selected_node) is not "null" {
+
 		//*******************validating enable_http_port_access node*****************************		
 			key = "enable_http_port_access"
 			selected_node = plan.evaluate_attribute(rc, "cluster_config.0.endpoint_config.0."+key)
@@ -51,12 +56,11 @@ for allDPInstances as address, rc {
 			// } else {
 				
 				if  selected_node {
-					enable_http_port_access = true;
 					message = "Https port's access needs to be disabled for the dataproc services, please set value false to make it disabled"
+					messages_http[address] = []
+					append(messages_http[address],message)
 					append(messages[address],message)
-				} else {
-					enable_http_port_access = false;
-				}
+				} 
 			//}
 		}
 
@@ -65,9 +69,11 @@ for allDPInstances as address, rc {
 		selected_node = plan.evaluate_attribute(rc, "cluster_config.0."+key)
 		
 		if types.type_of(selected_node) is "null" {
-			internal_ip_only = false
-			service_account_validation = false
 			message = plan.to_string(address) + " does not have "+ key +" defined"
+			messages_ip_internal[address] = []
+			messages_sa[address] = []
+			append(messages_ip_internal[address],message)
+			append(messages_sa[address],message)
 			append(messages[address],message)
 		} else {
 
@@ -76,18 +82,17 @@ for allDPInstances as address, rc {
 			selected_node = plan.evaluate_attribute(rc, "cluster_config.0.gce_cluster_config.0."+key)
 			
 			if types.type_of(selected_node) is "null" {
-				internal_ip_only = false;
 				message = plan.to_string(address) + " does not have "+ key +" defined"
+				messages_ip_internal[address] = []
+				append(messages_ip_internal[address],message)
 				append(messages[address],message)
 			} else {				
-				if not selected_node {
-					internal_ip_only = false;
-					
+				if not selected_node {					
 					message = "The dataproc service will be accessible through internal ip only but it is disabled here, please set value true to make it enable"
+					messages_ip_internal[address] = []
+					append(messages_ip_internal[address],message)
 					append(messages[address],message)
-				} else {
-					internal_ip_only = true;
-				}
+				} 
 			}
 
 		//*******************validating service_account node*****************************************
@@ -95,33 +100,31 @@ for allDPInstances as address, rc {
 
 			selected_node = plan.evaluate_attribute(rc, "cluster_config.0.gce_cluster_config.0."+key)
 			
-			if types.type_of(selected_node) is "null" {		
+			if types.type_of(selected_node) is "null" {					
 				result = plan.evaluate_attribute(rc.change.after_unknown, "cluster_config.0.gce_cluster_config.0."+key)
-
-				if result is "null" or result is true {
-					service_account_validation = true;
-				} else {
-					service_account_validation = false;
+				if result is not "null" and result is not true {
 					message = "Dataproc service is not having any service account, please assign it"
+					messages_sa[address] = []
+					append(messages_sa[address],message)
 					append(messages[address],message)
 				}
 			} else {				
 				service_account_emailid = plan.evaluate_attribute(rc, "cluster_config.0.gce_cluster_config.0."+key)
 				
 				if types.type_of(service_account_emailid) is "null" {
-					service_account_validation = false;
 					message = "Dataproc service is not having any service account, please assign it"
+					messages_sa[address] = []
+					append(messages_sa[address],message)
 					append(messages[address],message)
 				} else {
 						arr_sa = strings.split(service_account_emailid,default_compute_sa)
 
 						if length(arr_sa) > 1 {
-								service_account_validation = false;
 								message = "The service account of dataproc service can not be a default compute service account, please change it"
+								messages_sa[address] = []
+								append(messages_sa[address],message)
 								append(messages[address],message)
-						} else {
-								service_account_validation = true;
-						}
+						} 
 				}				
 			}
 		}
@@ -129,17 +132,20 @@ for allDPInstances as address, rc {
 }
 
 GCP_DATAPROC_PRIV = rule {
-	internal_ip_only
+	length(messages_ip_internal) is 0 
 }
 
 GCP_DATAPROC_HTTPS = rule {
-	not enable_http_port_access
+	length(messages_http) is 0
 }
 
 GCP_DATAPROC_SA = rule {
-	service_account_validation
+	length(messages_sa) is 0 
 }
 # Main rule
+print("length of internal: "+ plan.to_string(length(messages_ip_internal)))
+print("length of http: "+ plan.to_string(length(messages_http)))
+print("length of SA: "+ plan.to_string(length(messages_sa)))
 print(messages)
 
 main = rule { GCP_DATAPROC_HTTPS and GCP_DATAPROC_PRIV and GCP_DATAPROC_SA }
