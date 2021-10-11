@@ -49,19 +49,13 @@ for allDPInstances as address, rc {
 		//*******************validating enable_http_port_access node*****************************		
 			key = "enable_http_port_access"
 			selected_node = plan.evaluate_attribute(rc, "cluster_config.0.endpoint_config.0."+key)
-
-			// if types.type_of(selected_node) is "null" {
-			// 	message = plan.to_string(address) + " does not have "+ key +" defined"
-			// 	append(messages[address],message)
-			// } else {
-				
-				if  selected_node {
-					message = "Https port's access needs to be disabled for the dataproc services, please set value false to make it disabled"
-					messages_http[address] = []
-					append(messages_http[address],message)
-					append(messages[address],message)
-				} 
-			//}
+			
+			if  selected_node {
+				message = "Https port's access needs to be disabled for the dataproc services, please set value false to make it disabled"
+				messages_http[address] = []
+				append(messages_http[address],message)
+				append(messages[address],message)
+			}
 		}
 
 		//*******************validating gce_cluster_config node***************************
