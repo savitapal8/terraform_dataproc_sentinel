@@ -49,6 +49,7 @@ for allDPInstances as address, rc {
 		key = "endpoint_config"
 		
 		selected_node = plan.evaluate_attribute(rc, "cluster_config.0." + key)
+		
 		if types.type_of(selected_node) is not "null" {
 
 		//*******************validating enable_http_port_access node*****************************		

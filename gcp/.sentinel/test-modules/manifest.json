@@ -1,7 +1,25 @@
 {
 	"records": [
 		{
-			"key": "test\\google_dataproc_cluster\\success-gdc-dp-priv\\tfplan-functions",
+			"key": "test\\google_dataproc_cluster\\null\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\failure-gdc-dp-sa\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\failure-after-apply\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\null-after-apply\\tfplan-functions",
 			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
@@ -19,25 +37,7 @@
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
 		},
 		{
-			"key": "test\\google_dataproc_cluster\\null-before-apply\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\failure-gdc-dp-internal-ip\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\success-gdc-dp-https\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\failure-gdc-dp-http\\tfplan-functions",
+			"key": "test\\google_dataproc_cluster\\success-gdc-dp-http\\tfplan-functions",
 			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
@@ -49,31 +49,7 @@
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
 		},
 		{
-			"key": "test\\google_dataproc_cluster\\failure-gdc-dp-sa\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
 			"key": "test\\google_dataproc_cluster\\null-gdc-dp-https\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\success-gdc-dp-http\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\success\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\failure-before-apply\\tfplan-functions",
 			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
@@ -85,13 +61,49 @@
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
 		},
 		{
-			"key": "test\\google_dataproc_cluster\\success-before-apply\\tfplan-functions",
+			"key": "test\\google_dataproc_cluster\\success-after-apply\\tfplan-functions",
 			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
 		},
 		{
-			"key": "test\\google_dataproc_cluster\\null\\tfplan-functions",
+			"key": "test\\google_dataproc_cluster\\success-gdc-dp-priv\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\failure-before-apply\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\failure-gdc-dp-http\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\null-before-apply\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\success\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\success-gdc-dp-https\\tfplan-functions",
+			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test\\google_dataproc_cluster\\success-before-apply\\tfplan-functions",
 			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
@@ -103,19 +115,7 @@
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
 		},
 		{
-			"key": "test\\google_dataproc_cluster\\null-after-apply\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\failure-after-apply\\tfplan-functions",
-			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
-			"sourceSum": "",
-			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
-		},
-		{
-			"key": "test\\google_dataproc_cluster\\success-after-apply\\tfplan-functions",
+			"key": "test\\google_dataproc_cluster\\failure-gdc-dp-internal-ip\\tfplan-functions",
 			"source": "../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "D:/wells_fargo/terraform_dataproc_sentinel/common-functions/tfplan-functions/tfplan-functions.sentinel"
