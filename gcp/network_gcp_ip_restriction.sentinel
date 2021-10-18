@@ -1,0 +1,131 @@
+# This policy uses the Sentinel tfplan/v2 import to require that
+# all GCE dataproc instances following all the policies
+
+# Note that the comparison is case-sensitive.
+
+import "strings"
+import "types"
+import "tfplan-functions" as plan
+
+# Get all GCE dataproc instances
+allDPInstances = plan.find_resources("google_dataproc_cluster")
+
+# Filter to GCE dataproc instances with violations
+# Warnings will be printed for all violations since the last parameter is true
+
+//**********************Variables to be used*********************************
+key = ""
+selected_node = null
+
+messages = {}
+//***************************************************************************
+
+check_key_existance = func(map_data, key) {
+	keys_data = keys(map_data)
+	result = false
+
+	for keys_data as key_data {
+		if key_data is key {
+			result = true
+			return result
+		}
+	}
+
+	return result
+}
+
+create_sub_main_key_list = func(main_list, sub_list, address){
+	if check_key_existance(main_list, address) is not true {
+		main_list[address] = []
+	}
+	if check_key_existance(sub_list, address) is not true {
+		sub_list[address] = []
+	}
+
+	return null
+}
+
+check_cluster_config = func(address, rc) {
+	key = "cluster_config"
+	selected_node = plan.evaluate_attribute(rc, key)
+	
+	if types.type_of(selected_node) is "null" {
+		return plan.to_string(address) + " does not have "+ key +" defined"
+	} else {
+		return null
+	}
+}
+
+check_gce_cluster_config = func(address, rc) {
+	key = "gce_cluster_config"
+	selected_node = plan.evaluate_attribute(rc, "cluster_config.0." + key)
+
+	if types.type_of(selected_node) is "null" {
+		return plan.to_string(address) + " does not have "+ key +" defined"
+	} else {
+		return null
+	}
+}
+
+check_internal_ip = func(address, rc) {
+	key = "internal_ip_only"
+	selected_node = plan.evaluate_attribute(rc, "cluster_config.0.gce_cluster_config.0." + key)
+
+	if types.type_of(selected_node) is "null" {
+		return plan.to_string(address) + " does not have " + key +" defined"
+	} else {
+		if not selected_node {					
+			return "The dataproc service will be accessible through internal ip only but it is disabled here, please set value true to make it enable"			
+		} else {
+			return null
+		}
+	}
+}
+
+//*******************validating gce cluster config && internal ip only************************************
+messages_ip_internal = {}
+for allDPInstances as address, rc {
+ 	message = null
+ 	message = check_cluster_config(address, rc)
+
+ 	if types.type_of(message) is not "null"{
+
+		create_sub_main_key_list(messages, messages_ip_internal, address)
+
+ 		append(messages_ip_internal[address],message)
+ 		append(messages[address],message)
+
+ 	} else {
+
+ 		message = check_gce_cluster_config(address, rc)
+
+ 		if types.type_of(message) is not "null"{
+
+			create_sub_main_key_list(messages, messages_ip_internal, address)
+
+ 			append(messages_ip_internal[address],message)
+ 			append(messages[address],message)
+ 		} else {
+ 			message = check_internal_ip(address, rc)
+
+ 			if types.type_of(message) is not "null" {
+
+				create_sub_main_key_list(messages, messages_ip_internal, address)
+				
+ 				append(messages_ip_internal[address],message)
+ 				append(messages[address],message)
+ 			}
+ 		}
+ 	}
+}
+//********************************************************************************************************
+
+
+GCP_DATAPROC_PRIV = rule {
+ 	length(messages_ip_internal) is 0 
+}
+
+# Main rule
+print(messages)
+
+main = rule { GCP_DATAPROC_PRIV }
